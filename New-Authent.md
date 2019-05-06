@@ -71,7 +71,6 @@ from reportlab.pdfbase.ttfonts import TTFont
 from reportlab.pdfbase import pdfmetrics
 from libdeda.privacy import AnonmaskApplierTdm
 from libdeda.pattern_handler import Pattern4, TDM
-import argparse
 from pdf2image import convert_from_path, convert_from_bytes
 from reportlab.pdfgen import canvas
 
@@ -95,28 +94,16 @@ def main():
     c.drawString(50,700, str(token))
     c.save()
 
-    parser = argparse.ArgumentParser(
-        description='Create a custom TDM')
-    parser.add_argument("--serial", type=int, metavar="NNNNNN", default=324)
-    parser.add_argument("--manufacturer", type=str, default="Epson", help=', '.join(set(Pattern4.manufacturers.values())))
-    parser.add_argument("--year", type=int, metavar="NN", default=18)
-    parser.add_argument("--month", type=int, metavar="NN", default=11)
-    parser.add_argument("--day", type=int, metavar="NN", default=11)
-    parser.add_argument("--hour", type=int, metavar="NN", default=11)
-    parser.add_argument("--minutes", type=int, metavar="NN", default=11)
-    parser.add_argument("--dotradius", type=float, metavar="INCHES", default=None, help='default=%f'%AnonmaskApplierTdm.dotRadius)
-    args = parser.parse_args()
-
     tdm = TDM(Pattern4, content=dict(
-        serial=args.serial,
-        hour=args.hour,
-        minutes=args.minutes,
-        day=args.day,
-        month=args.month,
-        year=args.year,
-        manufacturer=args.manufacturer,
+        serial=324,
+        hour=11,
+        minutes=11,
+        day=11,
+        month=11,
+        year=18,
+        manufacturer="Epson",
     ))
-    aa = AnonmaskApplierTdm(tdm, dotRadius=args.dotradius)
+    aa = AnonmaskApplierTdm(tdm, dotRadius=None)
     with open("newauth.pdf","rb") as pdfin:
         data = aa.apply(pdfin.read())
     images = convert_from_bytes(data, dpi=300)
