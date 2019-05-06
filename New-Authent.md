@@ -5,7 +5,7 @@ This challenge provided two pdf files containing TOTP codes (Time based One Time
 From the description, we understood that the seed is an 8 digit number ('the same 8 digit number as the safe code')
 
 Some algorithm parameters were given like "param HMAC-SHA1, 30s steps, 10 bytes secrets", however
-the 10 bytes secret was confusing as it was in conflict with the previous information an 8 digit number.
+the 10 bytes secret was confusing as it was in conflict with the previous information of an 8 digit number.
 
 After trying a few variations on the key encoding, the below program returned pretty quickly with a result *83427324*:
 
